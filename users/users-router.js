@@ -11,14 +11,14 @@ router.get('/', restricted, /*checkDepartment('user'),*/ (req, res) => {
         .catch(err => res.send(err));
 });
 
-function checkDepartment(department) {
-    return (req, res, next) => {
-        if (req.jwt.department === department) {
-            next();
-        } else {
-            res.status(403).json({ message: "You do not have the authorization" });
-        }
-    };
-}
+// function checkDepartment(department) {
+//     return (req, res, next) => {
+//         if (req.jwt.department === department) {
+//             next();
+//         } else {
+//             res.status(403).json({ message: "You do not have the authorization" });
+//         }
+//     };
+// }
 
 module.exports = router; 
