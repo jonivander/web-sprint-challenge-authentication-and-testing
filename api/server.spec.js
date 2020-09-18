@@ -45,5 +45,43 @@ describe('server', () => {
         });
     });
 
+    describe('POST /login', () => {
+        beforeEach(async () => {
+            await db('users').truncate();
+        });
+
+        it("should return status code 200 when loggin in a user successfully", () => {
+            return supertest(server)
+                .post("/api/auth/login")
+                .send({
+                    "username": "SprintTester2",
+                    "password": "whatdoyouKNOW2"
+                })
+                .then(res => {
+                    expect(res.status).toBe(200);
+                });
+        });
+
+        it("should fail with code 400 if passed incorrect data", () => {
+            return supertest(server)
+                .post("/api/auth/login")
+                .send({})
+                .then(res => {
+                    expect(res.status).toBe(400);
+                });
+        });
+
+        it("should login the user", async () => {
+            const res = await supertest(server)
+                .post("/api/auth/login")
+                .send({
+                    "username": "SprintSpirit",
+                    "password": "testPassword"
+                });
+
+            expect(res.body.data.username).toBe("TestOneTwoThree");
+        });
+    });
+
 
 });
