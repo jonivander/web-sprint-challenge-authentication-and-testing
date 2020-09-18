@@ -45,6 +45,7 @@ describe('server', () => {
         });
     });
 
+
     describe('POST /login', () => {
         beforeEach(async () => {
             await db('users').truncate();
@@ -83,5 +84,21 @@ describe('server', () => {
         });
     });
 
+
+    describe("GET /api/jokes", () => {
+        it("should return HTTP status code 200", () => {
+            return supertest(server)
+                .get("/api/jokes")
+                .then(res => {
+                    expect(res.status).toBe(200);
+                });
+        });
+
+        it("should return an api property with the value up", async () => {
+            const res = await supertest(server).get("/api/jokes");
+
+            expect(res.body.api).toBe("up");
+        });
+    });
 
 });
